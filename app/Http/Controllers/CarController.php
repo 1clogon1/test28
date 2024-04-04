@@ -16,7 +16,11 @@ class CarController extends Controller
      */
     public function index()
     {
-        $car = Car::get();
+           $car = Car::orderBy('id', 'ASC')
+            ->join('brands', 'brands.id', '=', 'cars.brand_id')
+            ->join('samples', 'samples.id', '=', 'cars.sample_id')
+            ->select('cars.id','samples.name as model','brands.name as brands','cars.release_year','cars.mileage','cars.color','cars.created_at','cars.updated_at')
+            ->get();
         if($car->isNotEmpty()){
             return response(['car' => $car], 200);
         }
