@@ -14,7 +14,11 @@ class SampleController extends Controller
      */
     public function index()
     {
-        $sample = Sample::get();
+                $sample = Sample::orderBy('id', 'ASC')
+            ->join('brands', 'brands.id', '=', 'samples.brand_id')
+            ->select('samples.id','samples.name','brands.name as brands','samples.created_at','samples.updated_at')
+            ->get();
+
 
         if($sample->isNotEmpty()){
             return response(['sample' => $sample], 200);
