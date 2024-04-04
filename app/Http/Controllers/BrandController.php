@@ -14,7 +14,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brand = Brand::get();
+        $brand = Brand::orderBy('id', 'ASC')->get();
         if($brand->isNotEmpty()){
             return response(['brand' => $brand], 200);
         }
